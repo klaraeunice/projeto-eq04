@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:15
+    container_name: db_carteira_financeira
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: carteira_db
+    ports:
+      - "5432:5432"
+    volumes:
+      # Mantém os dados salvos mesmo se o container reiniciar
+      - ./postgres-data:/var/lib/postgresql/data
+      # Executa o schema.sql automaticamente na primeira inicialização
+      - ./schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+    restart: unless-stopped
