@@ -13,9 +13,9 @@ public class Main {
     public static void main(String[] args) {
         try {
             // 1. Configurar Conexão com o Banco de Dados (Exemplo com PostgreSQL)
-            String url = "jdbc:postgresql://localhost:5432/seubanco";
-            String user = "postgres";
-            String password = "suasenha";
+            String url = "jdbc:postgresql://localhost:5432/carteira_db";
+            String user = "admin";
+            String password = "123";
             Connection connection = DriverManager.getConnection(url, user, password);
 
             // 2. Instanciar as camadas
@@ -27,6 +27,9 @@ public class Main {
             Javalin app = Javalin.create(config -> {
                 config.http.defaultContentType = "application/json";
             }).start(7070);
+            app.get("/", ctx -> {
+                ctx.result("Bem-vindo à API da Carteira Financeira! O servidor e o banco estão funcionando.");
+            });
 
             // 4. Mapear as rotas
             app.post("/usuarios", usuarioController::criar);
