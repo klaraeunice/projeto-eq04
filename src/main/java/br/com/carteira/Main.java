@@ -60,6 +60,8 @@ public class Main {
         app.post("/contas", contaController::criarConta);
         app.get("/contas/{id}", contaController::buscarConta);
         app.get("/usuarios/{usuarioId}/contas", contaController::listarContasDoUsuario);
+        // ADICIONADO: Rota do Padrão Strategy para simulação de juros dinâmicos
+        app.get("/contas/simular-juros", contaController::simularJuros);
 
         // --- MOVIMENTAÇÕES / TRANSAÇÕES ---
         app.post("/transacoes", transacaoController::registrarTransacao);
