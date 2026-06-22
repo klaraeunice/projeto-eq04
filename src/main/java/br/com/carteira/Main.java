@@ -32,7 +32,7 @@ public class Main {
         cfg.setMaximumPoolSize(5); // REQUISITO: Banco compartilhado, limite estrito de 5 conexões
 
         // Driver do PostgreSQL
-        cfg.setDriverClassName("org.postgresql.Driver");
+        //cfg.setDriverClassName("org.postgresql.Driver");
 
         HikariDataSource dataSource = new HikariDataSource(cfg);
 
