@@ -6,6 +6,9 @@ import br.com.carteira.services.ContaBancariaService;
 
 import io.javalin.http.Context;
 import java.util.Map;
+import br.com.carteira.strategy.*;
+import io.javalin.http.Context;
+import java.math.BigDecimal;
 
 public class ContaController {
 
@@ -42,5 +45,31 @@ public class ContaController {
     public void listarContasDoUsuario(Context ctx) {
         Long usuarioId = Long.valueOf(ctx.pathParam("usuarioId"));
         ctx.json(contaService.listarContasDoUsuario(usuarioId));
+    }
+    public void simularJuros(Context ctx) {
+        // 1. Pegamos os dados em texto da URL de forma segura
+        String saldoParam = ctx.queryParam("saldo");
+        String taxaParam = ctx.queryParam("taxa");
+        String tipoJuros = ctx.queryParam("tipo");
+
+        // 2. Convertemos os textos para os números corretos (evitando o aviso amarelo)
+        BigDecimal saldo = (saldoParam != null && !saldoParam.isEmpty()) ? new BigDecimal(saldoParam) : BigDecimal.ZERO;
+        double taxa = (taxaParam != null && !taxaParam.isEmpty()) ? Double.parseDouble(taxaParam) : 0.0;
+
+        // 3. Declaramos a Interface (Desacoplada)
+        JurosStrategy strategy;
+
+        // 4. Escolha dinâmica da estratégia
+        if ("composto".equalsIgnoreCase(tipoJuros)) {
+            strategy = new JurosCompostosStrategy();
+        } else {
+            strategy = new JurosSimplesStrategy();
+        }
+
+        // 5. Executa a estratégia escolhida
+        BigDecimal resultadoJuros = strategy.calcularJuros(saldo, taxa);
+
+        // 6. Retorna o resultado para o usuário
+        ctx.result("Valor dos juros calculados: R$ " + resultadoJuros).status(200);
     }
 }

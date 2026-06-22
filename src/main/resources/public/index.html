@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carteira Financeira API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; color: #333; }
+        h1 { color: #2c3e50; }
+        .container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .endpoint { background: #e8f4f8; padding: 10px; margin: 10px 0; border-left: 4px solid #3498db; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo à Carteira Financeira</h1>
+        <p>A API está funcionando e conectada ao banco de dados!</p>
+        
+        <h2>Endpoints Disponíveis</h2>
+        <div class="endpoint"><strong>POST /usuarios</strong> - Criar um novo usuário</div>
+        <div class="endpoint"><strong>GET /usuarios</strong> - Listar usuários</div>
+        <div class="endpoint"><strong>POST /contas</strong> - Criar conta bancária para um usuário</div>
+        <div class="endpoint"><strong>GET /usuarios/{usuarioId}/contas</strong> - Listar contas do usuário</div>
+        <div class="endpoint"><strong>POST /transacoes</strong> - Registrar uma nova transação</div>
+        <div class="endpoint"><strong>GET /contas/{contaId}/transacoes</strong> - Listar transações de uma conta</div>
+
+        <p><em>Esta é a sua página inicial básica em HTML. Você pode modificá-la para criar formulários e consumir a API usando JavaScript (fetch).</em></p>
+    </div>
+</body>
+</html>
