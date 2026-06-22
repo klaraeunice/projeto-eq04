@@ -1,6 +1,6 @@
 # Arquivos compilados do Java
 *.class
-
+.env
 # Diretórios de build (Maven / Gradle)
 /target/
 /build/
