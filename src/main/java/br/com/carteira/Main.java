@@ -14,6 +14,8 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.javalin.Javalin;
 
+import java.util.Map;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -59,9 +61,13 @@ public class Main {
 
         // 4. Mapear as rotas da API
 
-        // REQUISITO: Endpoint /ping público para o portal de monitoramento (Aparecer "no ar")
-        app.get("/ping", ctx -> ctx.json(java.util.Map.of("status", "ok")));
-
+        app.get("/ping", ctx -> {
+            ctx.json(Map.of(
+                "status", "ok",
+                "service", "eq04",
+                "timestamp", java.time.Instant.now().toString()
+            ));
+        });
         // OPCIONAL: Rota raiz para evitar o erro "Not Found" ao acessar o endereço puro
         app.get("/", ctx -> ctx.result("Bem-vindo à API da Carteira Bancária! Acesse /ping para testar a saúde do sistema."));
         // --- CRUD DE USUÁRIOS ---
