@@ -1,0 +1,23 @@
+# Arquivos compilados do Java
+*.class
+
+# Diretórios de build (Maven / Gradle)
+/target/
+/build/
+/out/
+
+# Arquivos e pastas de IDEs (IntelliJ, Eclipse, VS Code)
+/.idea/
+*.iml
+.project
+.classpath
+.settings/
+/.vscode/
+
+# Logs e arquivos do SO
+*.log
+.DS_Store
+Thumbs.db
+
+# Banco de dados local
+postgres-data/
