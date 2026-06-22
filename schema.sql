@@ -39,3 +39,36 @@ CREATE TABLE Fatura (
     valor_total DECIMAL(10, 2) DEFAULT 0.0,
     status VARCHAR(20) NOT NULL CHECK (status IN ('ABERTA', 'FECHADA', 'PAGA'))
 );
+-- Criação da tabela de usuários
+-- Nota: O tipo SERIAL é comum no PostgreSQL para auto-incremento.
+-- Se estiver usando MySQL, utilize 'id INT AUTO_INCREMENT PRIMARY KEY'.
+
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    cpf VARCHAR(11) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
+CREATE TABLE IF NOT EXISTS contas_bancarias (
+    id SERIAL PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    numero_conta VARCHAR(20) NOT NULL UNIQUE,
+    saldo_atual DECIMAL(15, 2) NOT NULL DEFAULT 0.00, -- Removi o CHECK (saldo_atual >= 0) temporariamente caso a conta possa ficar negativada (especial)
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS transacoes (
+    id SERIAL PRIMARY KEY,
+    conta_id INT NOT NULL,
+    tipo VARCHAR(10) NOT NULL CHECK (tipo IN ('ENTRADA', 'SAIDA')), -- Usando VARCHAR com CHECK (Muito mais fácil de tratar no Java!)
+    valor DECIMAL(15, 2) NOT NULL CHECK (valor > 0),
+    data_transacao DATE NOT NULL,
+    descricao VARCHAR(255),
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_conta FOREIGN KEY (conta_id) REFERENCES contas_bancarias(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_contas_usuario ON contas_bancarias(usuario_id);
+CREATE INDEX IF NOT EXISTS idx_transacoes_conta ON transacoes(conta_id);
