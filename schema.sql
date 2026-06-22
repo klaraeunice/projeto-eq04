@@ -39,3 +39,14 @@ CREATE TABLE Fatura (
     valor_total DECIMAL(10, 2) DEFAULT 0.0,
     status VARCHAR(20) NOT NULL CHECK (status IN ('ABERTA', 'FECHADA', 'PAGA'))
 );
+-- Criação da tabela de usuários
+-- Nota: O tipo SERIAL é comum no PostgreSQL para auto-incremento.
+-- Se estiver usando MySQL, utilize 'id INT AUTO_INCREMENT PRIMARY KEY'.
+
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    cpf VARCHAR(11) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
